@@ -21,7 +21,7 @@ CREATE TABLE whats_in_my_freezer."items" (
     id SERIAL PRIMARY KEY,
     freezer_id INTEGER NOT NULL REFERENCES whats_in_my_freezer."freezers"(id),
     name VARCHAR(255) NOT NULL,
-    quantity INTEGER NOT NULL,
+    quantity VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );

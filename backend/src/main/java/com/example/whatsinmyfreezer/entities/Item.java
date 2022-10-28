@@ -1,15 +1,15 @@
 package com.example.whatsinmyfreezer.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
-@Table(name = "freezers")
-public class Freezer {
+@Table(name = "items")
+public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,12 +20,14 @@ public class Freezer {
 
     @UpdateTimestamp
     private Timestamp updated_at;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "freezer_id", nullable = false)
+    private Freezer freezer;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "freezer")
-    private List<Item> items;
-
-    private Integer user_id;
     private String name;
+    private String quantity;
 
     public Integer getId() {
         return id;
@@ -51,20 +53,12 @@ public class Freezer {
         this.updated_at = updated_at;
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Freezer getFreezer() {
+        return freezer;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setFreezer(Freezer freezer) {
+        this.freezer = freezer;
     }
 
     public String getName() {
@@ -73,5 +67,13 @@ public class Freezer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }
